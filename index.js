@@ -10,39 +10,43 @@ const client = mqtt.connect(MQTT_BROKER,{
   password: "#Lokesh000"
 });
 
-// ================= INFLUX CONFIG =================
-const INFLUX_URL = "https://YOUR_INFLUX_URL/api/v2/write?bucket=YOUR_BUCKET&org=YOUR_ORG&precision=s";
-const TOKEN = "YOUR_INFLUX_TOKEN";
+// ================= INFLUXDB CONFIG =================
+const INFLUX_URL = "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=Moonrider%20Pvt%20Ltd&bucket=Tractor_Data&precision=s";
+
+const TOKEN = "BLjKjM_zGG5u2HJkw1uPusEjzSjbdYee8JvC_TqUnS-21z6ckYoIoXrJH8Dc3TmeGm2Vr71uQoB5xs3Uz69y8w==";
 
 // ================= MQTT CONNECT =================
 client.on("connect", () => {
-  console.log("Connected to HiveMQ Cloud");
+
+  console.log("Connected to HiveMQ");
+
   client.subscribe(MQTT_TOPIC);
+
 });
 
-// ================= DATA RECEIVED =================
+// ================= MQTT DATA =================
 client.on("message", async (topic, message) => {
 
-  console.log("MQTT Data:", message.toString());
-
-  const data = JSON.parse(message.toString());
-
-  const line = `tractor voltage=${data.voltage},current=${data.current}`;
+  console.log("Received:", message.toString());
 
   try {
 
+    const data = JSON.parse(message.toString());
+
+    const line = `tractor voltage=${data.voltage},current=${data.current}`;
+
     await axios.post(INFLUX_URL, line, {
       headers:{
-        Authorization:`Token ${TOKEN}`,
-        "Content-Type":"text/plain"
+        "Authorization": `Token ${TOKEN}`,
+        "Content-Type": "text/plain"
       }
     });
 
-    console.log("Data written to InfluxDB");
+    console.log("Data sent to InfluxDB");
 
   } catch(err) {
 
-    console.log("InfluxDB Error:",err);
+    console.log("Error:", err);
 
   }
 
