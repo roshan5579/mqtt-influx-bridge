@@ -1,0 +1,8 @@
+{
+  "name": "mqtt-influx-bridge",
+  "version": "1.0.0",
+  "dependencies": {
+    "mqtt": "^4.3.7",
+    "axios": "^1.6.0"
+  }
+}
