@@ -6,7 +6,7 @@ const MQTT_TOPIC = "tractor/data";
 
 const INFLUX_URL = "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=Moonrider%20Pvt%20Ltd&bucket=Tractor_Data&precision=s";
 
-const TOKEN = "YOUR_TOKEN";
+const TOKEN = "BQ1heSXdZ6SVV-WlbYj1Su-p2qJbsMSNYtk5KEGE3kTno9LoGakSKfJGGhQsxNqGdsPMPpaFq5NtFpgMtT2I-w==";
 
 const client = mqtt.connect(MQTT_BROKER,{
   username: "MR_TRACTOR",
